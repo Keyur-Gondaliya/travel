@@ -19,31 +19,36 @@ function Menu() {
   var dashboardClass = window.location.pathname.match(/^\/dashboard/)
     ? "active"
     : "";
-  var restaurantsClass =
-    window.location.pathname.match(/^\/users/) ||
-    window.location.pathname.match(/^\/restaurantItems/) ||
-    window.location.pathname.match(/^\/restaurantModifier/) ||
-    window.location.pathname.match(/^\/restaurantDetails/)
-      ? "active"
-      : "";
+  var userListClass = window.location.pathname.match(/^\/user-list/)
+    ? "active"
+    : "";
 
   // var addRestaurantsClass = window.location.pathname.match(/^\/add-restaurant/) ? "active" : "";
 
-  var customersClass = window.location.pathname.match(/^\/customers/)
+  var userStateClass = window.location.pathname.match(/^\/user-state/)
     ? "active"
     : "";
   //  if(addRestaurantsClass=='active'){
   //      restaurantsClass = 'active';
   //  }
-  var bannersClass = window.location.pathname.match(/^\/banners/)
+  var locationManagementClass = window.location.pathname.match(
+    /^\/location-management/
+  )
     ? "active"
     : "";
 
-  var categoryClass = window.location.pathname.match(/^\/category/)
+  var countryManagementClass = window.location.pathname.match(
+    /^\/country-management/
+  )
     ? "active"
     : "";
 
-  var orderClass = window.location.pathname.match(/^\/orders/) ? "active" : "";
+  var inquiriesClass = window.location.pathname.match(/^\/inquiries/)
+    ? "active"
+    : "";
+  var feedbackClass = window.location.pathname.match(/^\/feedback/)
+    ? "active"
+    : "";
 
   return (
     <>
@@ -56,16 +61,9 @@ function Menu() {
               className="d-inline-block align-text-top mr-2"
             />
             <span className="BrudAdmin">
-              <b>Dance Match</b>
+              <b>Travel App</b>
             </span>
           </NavLink>
-
-          {/* <span className="navbar-logo">
-              <img src="/assets/img/logo/adminLogo.png" alt="adminLogo"></img>
-            </span>
-            <span className="BrudAdmin">
-              <b>BRUD</b> Admin
-            </span> */}
 
           <button
             type="button"
@@ -77,15 +75,7 @@ function Menu() {
             <span className="icon-bar"></span>
           </button>
         </div>
-        {/* <button
-          type="button"
-          className="navbar-toggle"
-          data-click="sidebar-toggled"
-        >
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
-          <span className="icon-bar"></span>
-        </button> */}
+
         <ul className="navbar-nav navbar-right">
           <li className="dropdown navbar-user">
             <a href="#" className="dropdown-toggle" data-toggle="dropdown">
@@ -120,28 +110,7 @@ function Menu() {
 
       <div id="sidebar" className="sidebar">
         <div data-scrollbar="true" data-height="100%">
-          <div className="nav-header">
-            {/* <NavLink to="/dashboard" className="navbar-brand ">
-              <span className="d-flex">
-                <img
-                  src="/assets/img/logo/adminLogo.png"
-                  alt="BRUD-logo"
-                  width="50px"
-                  className="d-inline-block align-text-top mr-2 ml-2"
-                />
-                <span className="BrudAdmin mt-0">
-                  <b>BRUD</b> Admin
-                </span>
-              </span>
-              
-            </NavLink> */}
-            {/* <span className="navbar-logo">
-              <img src="/assets/img/logo/adminLogo.png" alt="adminLogo"></img>
-            </span>
-            <span className="BrudAdmin">
-              <b>BRUD</b> Admin
-            </span> */}
-          </div>
+          <div className="nav-header"></div>
           <ul className="nav">
             <li>
               <NavLink
@@ -158,12 +127,12 @@ function Menu() {
 
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/user-list"
+                className={userListClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-users menuIcon"></i>
                   <span className="menuItem">Users</span>
                 </div>
               </NavLink>
@@ -171,60 +140,61 @@ function Menu() {
 
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/user-state"
+                className={userStateClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-chart-pie menuIcon"></i>
                   <span className="menuItem">Analyze</span>
                 </div>
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/location-management"
+                className={locationManagementClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-map-pin menuIcon"></i>
                   <span className="menuItem">Location</span>
                 </div>
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/country-management"
+                className={countryManagementClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-globe menuIcon"></i>
                   <span className="menuItem"> Country</span>
                 </div>
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/inquiries"
+                className={inquiriesClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-question menuIcon"></i>
+
                   <span className="menuItem"> Inquiries</span>
                 </div>
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/users"
-                className={restaurantsClass}
+                to="/feedback"
+                className={feedbackClass}
                 activeClassName="active"
               >
                 <div className="menuItemDiv">
-                  <i className="fa fa-building menuIcon"></i>
+                  <i className="fa fa-comment menuIcon"></i>
                   <span className="menuItem">Feedback</span>
                 </div>
               </NavLink>
@@ -232,8 +202,6 @@ function Menu() {
           </ul>
         </div>
       </div>
-
-      <div className="sidebar-bg"></div>
     </>
   );
 }
