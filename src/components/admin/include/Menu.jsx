@@ -168,6 +168,67 @@ function Menu() {
                 </div>
               </NavLink>
             </li>
+
+            <li>
+              <NavLink
+                to="/users"
+                className={restaurantsClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-building menuIcon"></i>
+                  <span className="menuItem">Analyze</span>
+                </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/users"
+                className={restaurantsClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-building menuIcon"></i>
+                  <span className="menuItem">Location</span>
+                </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/users"
+                className={restaurantsClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-building menuIcon"></i>
+                  <span className="menuItem"> Country</span>
+                </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/users"
+                className={restaurantsClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-building menuIcon"></i>
+                  <span className="menuItem"> Inquiries</span>
+                </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/users"
+                className={restaurantsClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-building menuIcon"></i>
+                  <span className="menuItem">Feedback</span>
+                </div>
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

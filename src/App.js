@@ -1,5 +1,5 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import Login from "./components/admin/Login";
+import Login from "./components/admin/Login/Login";
 import Dashboard from "./components/admin/Dashboard";
 import Profile from "./components/admin/Profile";
 import Restaurants from "./components/admin/Restaurants";
@@ -11,8 +11,8 @@ import Orders from "./components/admin/Orders";
 import RestoItems from "./components/admin/RestoItem";
 import OrdersDetails from "./components/admin/OrdersDetails";
 import RestoModifier from "./components/admin/RestoModifier";
-import ForgotPass from "./components/admin/ForgotPass";
-import { app } from "./components/admin/firebase";
+import ForgotPass from "./components/admin/Login/ForgotPass";
+import { app } from "./components/admin/firebase/firebase";
 function App() {
   return (
     <Routes>
