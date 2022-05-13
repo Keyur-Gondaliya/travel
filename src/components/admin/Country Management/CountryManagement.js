@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
-import Loader from '../include/Loader';
-import Menu from '../include/Menu';
+import React, { useEffect } from "react";
+import Loader from "../include/Loader";
+import Menu from "../include/Menu";
+import Data from "../json/countryByContinent.json";
+import Continent from "./components/Continent";
 export default function CountryManagement() {
-  useEffect(() => {
-    document.getElementById('page-loader').style.display = 'none';
+  var continentList = [];
 
-    var element = document.getElementById('page-container');
-    element.classList.add('show');
+  useEffect(() => {
+    Data.map((e, i) => {
+      continentList.push(e.continent);
+    });
+    continentList = new Set(continentList);
+    console.log(continentList);
+    document.getElementById("page-loader").style.display = "none";
+
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
   }, []);
   return (
     <>
@@ -42,6 +51,7 @@ export default function CountryManagement() {
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
               <form>
+                <Continent list={continentList} />
                 <div class="form-group">
                   <label for="exampleInputEmail1"> Country Name:</label>
                   <input
@@ -52,15 +62,7 @@ export default function CountryManagement() {
                     placeholder="Enter Country Name"
                   />
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Continent:</label>
-                  <input
-                    type="password"
-                    class="form-control ml-0"
-                    id="exampleInputPassword1"
-                    placeholder="Continent"
-                  />
-                </div>
+
                 <div class="form-group">
                   <label for="exampleInputPassword1"> Category: </label>
                   <br />
