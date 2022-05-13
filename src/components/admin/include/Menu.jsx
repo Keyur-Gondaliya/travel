@@ -1,49 +1,53 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 function Menu() {
   const navigate = useNavigate();
 
-  if (localStorage.getItem("DM_Admin_ID") == null) {
-    toast.error("Please login first...!");
-    navigate("/travel-app-admin");
+  if (localStorage.getItem('DM_Admin_ID') == null) {
+    toast.error('Please login first...!');
+    navigate('/travel-app-admin');
   }
 
   const Logout = () => {
-    localStorage.removeItem("DM_Admin_ID");
-    localStorage.removeItem("DM_Admin_EMAIL");
-    localStorage.removeItem("DM_Admin_NAME");
-    toast.success("Logout Successfully...!");
+    localStorage.removeItem('DM_Admin_ID');
+    localStorage.removeItem('DM_Admin_EMAIL');
+    localStorage.removeItem('DM_Admin_NAME');
+    toast.success('Logout Successfully...!');
   };
 
   var dashboardClass = window.location.pathname.match(/^\/dashboard/)
-    ? "active"
-    : "";
+    ? 'active'
+    : '';
+  var countryClass = window.location.pathname.match(/^\/country/)
+    ? 'active'
+    : '';
+
   var restaurantsClass =
     window.location.pathname.match(/^\/users/) ||
     window.location.pathname.match(/^\/restaurantItems/) ||
     window.location.pathname.match(/^\/restaurantModifier/) ||
     window.location.pathname.match(/^\/restaurantDetails/)
-      ? "active"
-      : "";
+      ? 'active'
+      : '';
 
   // var addRestaurantsClass = window.location.pathname.match(/^\/add-restaurant/) ? "active" : "";
 
   var customersClass = window.location.pathname.match(/^\/customers/)
-    ? "active"
-    : "";
+    ? 'active'
+    : '';
   //  if(addRestaurantsClass=='active'){
   //      restaurantsClass = 'active';
   //  }
   var bannersClass = window.location.pathname.match(/^\/banners/)
-    ? "active"
-    : "";
+    ? 'active'
+    : '';
 
   var categoryClass = window.location.pathname.match(/^\/category/)
-    ? "active"
-    : "";
+    ? 'active'
+    : '';
 
-  var orderClass = window.location.pathname.match(/^\/orders/) ? "active" : "";
+  var orderClass = window.location.pathname.match(/^\/orders/) ? 'active' : '';
 
   return (
     <>
@@ -93,19 +97,19 @@ function Menu() {
               <span className="d-none d-md-inline userName">
                 {/* {localStorage.getItem("BRUD_Admin_NAME")} */}
                 Dance Admin
-              </span>{" "}
+              </span>{' '}
               <b className="caret"></b>
             </a>
             <div
               className="dropdown-menu dropdown-menu-right"
-              style={{ borderRadius: "20px", padding: "5px " }}
+              style={{ borderRadius: '20px', padding: '5px ' }}
             >
               <span className="dropdown-item">
                 <NavLink
                   to="/admin-profile"
-                  style={{ textDecoration: "none", color: "#231549" }}
+                  style={{ textDecoration: 'none', color: '#231549' }}
                 >
-                  <span className="DropdownItem" style={{ color: "#231549" }}>
+                  <span className="DropdownItem" style={{ color: '#231549' }}>
                     Edit Profile
                   </span>
                 </NavLink>
@@ -152,6 +156,18 @@ function Menu() {
                 <div className="menuItemDiv">
                   <i className="fa fa-th-large menuIcon"></i>
                   <span className="menuItem">Dashboard</span>
+                </div>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/country"
+                className={countryClass}
+                activeClassName="active"
+              >
+                <div className="menuItemDiv">
+                  <i className="fa fa-th-large menuIcon"></i>
+                  <span className="menuItem">Country</span>
                 </div>
               </NavLink>
             </li>
