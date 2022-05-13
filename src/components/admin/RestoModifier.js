@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory, NavLink } from 'react-router-dom';
-import Loader from './include/Loader';
-import Menu from './include/Menu';
-import Footer from './include/Footer';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useLocation, NavLink } from "react-router-dom";
+import Loader from "./include/Loader";
+import Menu from "./include/Menu";
+import Footer from "./include/Footer";
+import axios from "axios";
 export default function RestoModifier() {
   const [modifierList, setModifierList] = useState([]);
   const location = useLocation();
 
   var data = location.state;
   useEffect(() => {
-    document.getElementById('page-loader').style.display = 'none';
+    document.getElementById("page-loader").style.display = "none";
 
-    var element = document.getElementById('page-container');
-    element.classList.add('show');
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
     getMenu();
   }, []);
   const getMenu = () => {
     const myurl =
-      'http://54.177.165.108:3000/api/admin/restaurants-items-modifiers';
+      "http://54.177.165.108:3000/api/admin/restaurants-items-modifiers";
     var bodyFormData = new URLSearchParams();
-    bodyFormData.append('auth_code', 'Brud#Cust$&$Resto#MD');
-    bodyFormData.append('item_id', data);
+    bodyFormData.append("auth_code", "Brud#Cust$&$Resto#MD");
+    bodyFormData.append("item_id", data);
 
     axios({
-      method: 'post',
+      method: "post",
       url: myurl,
       data: bodyFormData,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     })
       .then((response) => {
-        setModifierList(response['data']['data']);
+        setModifierList(response["data"]["data"]);
       })
       .catch((error) => {
-        console.log('Errors', error);
+        console.log("Errors", error);
       });
   };
   return (
@@ -50,24 +50,21 @@ export default function RestoModifier() {
           <ol className="breadcrumb float-xl-right">
             <li className="breadcrumb-item">
               {/* <NavLink to="/restaurantItems"> */}
-              <span className="basePath" onClick={useHistory().goBack}>
-                Restaurant Items
-              </span>
+              <span className="basePath">Restaurant Items</span>
               {/* </NavLink> */}
             </li>
             <li className="breadcrumb-item  currentPath">
               Restaurant Modifier
             </li>
           </ol>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: "flex" }}>
             <i
               className="fa fa-arrow-left edit"
-              onClick={useHistory().goBack}
               style={{
-                cursor: 'pointer',
-                fontSize: '20px',
-                marginTop: '7px',
-                marginRight: '10px',
+                cursor: "pointer",
+                fontSize: "20px",
+                marginTop: "7px",
+                marginRight: "10px",
               }}
             ></i>
             <h1 className="page-header">Restaurant Modifier</h1>
@@ -77,10 +74,10 @@ export default function RestoModifier() {
             <div className="card-body">
               <div
                 className="row RestName p-5"
-                style={{ borderRadius: '20px' }}
+                style={{ borderRadius: "20px" }}
               >
                 <div className="mx-auto ">
-                  <span style={{ fontSize: '18px', fontWeight: '700' }}>
+                  <span style={{ fontSize: "18px", fontWeight: "700" }}>
                     Food Order Detail
                   </span>
                 </div>
@@ -134,12 +131,12 @@ export default function RestoModifier() {
                   <>
                     <div className="row mx-auto">
                       <img
-                        src={'/assets/img/icon/cart-icon.png'}
+                        src={"/assets/img/icon/cart-icon.png"}
                         alt="RestoImage"
                         style={{
-                          width: '50px',
-                          height: '50px',
-                          margin: '10px',
+                          width: "50px",
+                          height: "50px",
+                          margin: "10px",
                         }}
                       />
                     </div>

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Loader from "./include/Loader";
 import Menu from "./include/Menu";
 import Footer from "./include/Footer";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function RestoDetails() {
   const location = useLocation();
@@ -39,7 +39,6 @@ export default function RestoDetails() {
           <div style={{ display: "flex" }}>
             <i
               class="fa fa-arrow-left edit"
-              onClick={useHistory().goBack}
               style={{
                 cursor: "pointer",
                 fontSize: "20px",

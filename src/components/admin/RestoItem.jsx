@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import Loader from "./include/Loader";
 import Menu from "./include/Menu";
 import Footer from "./include/Footer";
@@ -7,7 +7,6 @@ import axios from "axios";
 export default function RestoItems() {
   const [menuList, setMenuList] = useState([]);
   const location = useLocation();
-  let history = useHistory();
 
   var data = location.state;
   useEffect(() => {
@@ -59,7 +58,6 @@ export default function RestoItems() {
           <div style={{ display: "flex" }}>
             <i
               className="fa fa-arrow-left edit"
-              onClick={useHistory().goBack}
               style={{
                 cursor: "pointer",
                 fontSize: "20px",
@@ -168,12 +166,6 @@ export default function RestoItems() {
                                 height: "50px",
                                 border: "none",
                               }}
-                              onClick={() =>
-                                history.push({
-                                  pathname: "/restaurantModifier",
-                                  state: e.id,
-                                })
-                              }
                             >
                               View <i className="fa fa-eye text-right " />
                             </button>

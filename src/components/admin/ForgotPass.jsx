@@ -1,79 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
-import firebase from './firebase';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-
+import React, { useState, useEffect } from "react";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function ForgotPass() {
-  const history = useHistory();
-  if (localStorage.getItem('DM_Admin_ID') != null) {
-    toast.error('Already login...!');
-    history.push(`/dashboard`);
-  }
+  const location = useLocation();
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const [email, setemail] = useState(location?.state ? location?.state : "");
+  const [checkVisible, setcheckVisible] = useState(false);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setDisable(true);
+    if (email.trim().length === 0) {
+      setcheckVisible(true);
+    } else {
+      sendPasswordResetEmail(auth, email)
+        .then(async () => {
+          // Password reset email sent!
+          localStorage.setItem("forgotTest", true);
+          navigate("/");
+          // ..
+        })
+        .catch((error) => {
+          // const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorMessage.search("user-not-found")) {
+            toast.error(`Enter valid email`);
+            setDisable(false);
+          } else {
+            toast.error("Something went Wrong");
+            setDisable(false);
+          }
+
+          // ..
+        });
+
+      setcheckVisible(false);
+    }
+  };
+  // if (localStorage.getItem("DM_Admin_ID") != null) {
+  //   toast.error("Already login...!");
+  // }
 
   const [loginInfo, setLoginInfo] = useState({
-    email: '',
+    email: "",
   });
   const [errors, setErrors] = useState({});
   const [disable, setDisable] = useState(false);
 
-  const InputEvent = (e) => {
-    const newLoginInfo = { ...loginInfo };
-    newLoginInfo[e.target.name] = e.target.value;
-    setLoginInfo(newLoginInfo);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    /* if (validate()) {
-        setDisable(true);
-        const { email, password } = loginInfo;
-        const check = firebase.firestore().collection('admin').where('email','==',email).where('password','==',password);
-        check.get().then((querySnapshot) => {
-          if (querySnapshot.docs.length > 0) {
-            querySnapshot.forEach((doc) => {
-              localStorage.setItem('DM_Admin_ID', doc.id);
-              localStorage.setItem('DM_Admin_EMAIL', doc.data().email);
-              localStorage.setItem('DM_Admin_NAME', doc.data().name);
-              localStorage.setItem('DM_Admin_IMAGE', doc.data().image);
-                          toast.success("Login Successfully...!");
-              history.push(`/dashboard`);
-            });
-          } else {
-                      setDisable(false);
-                      toast.error("Your Email Id and Password does not match...!");
-          }
-        }).catch((error) => {
-                  setDisable(false);
-          console.log("Error getting documents: ", error);
-        });
-    }  */
-  };
-
-  const validate = () => {
-    let input = loginInfo;
-
-    let errors = {};
-    let isValid = true;
-
-    if (!input['email']) {
-      isValid = false;
-      errors['email_err'] = 'Please enter email';
-    }
-    if (!input['password']) {
-      isValid = false;
-      errors['password_err'] = 'Please enter password';
-    }
-
-    setErrors(errors);
-    return isValid;
-  };
-
   useEffect(() => {
-    document.getElementById('page-loader').style.display = 'none';
+    document.getElementById("page-loader").style.display = "none";
 
-    var element = document.getElementById('page-container');
-    element.classList.add('show');
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
   }, []);
 
   return (
@@ -86,7 +71,7 @@ function ForgotPass() {
         <div
           className="login-cover-image"
           style={{
-            backgroundImage: 'url(assets/img/login-bg/login-bg-17.jpg)',
+            backgroundImage: "url(assets/img/login-bg/login-bg-17.jpg)",
           }}
           data-id="login-cover-image"
         ></div>
@@ -109,19 +94,24 @@ function ForgotPass() {
           </div>
 
           <div className="login-content">
-            <form onSubmit={(e) => submitHandler(e)}>
+            <form onSubmit={submitHandler}>
               <div className="form-group m-b-20">
                 <input
                   type="text"
                   className="form-control form-control-lg ml-0"
                   placeholder="Email Address"
                   name="email"
-                  onChange={InputEvent}
+                  onChange={(e) => setemail(e.target.value)}
+                  value={email}
                 />
-                <div className="text-danger">{errors.email_err}</div>
+                {checkVisible ? (
+                  <div className="text-danger ms-0 text-start">
+                    Please enter email
+                  </div>
+                ) : null}{" "}
               </div>
               <div className="form-group m-b-20">
-                <NavLink to={'/travel-app-admin'}>Login Page</NavLink>
+                <NavLink to={"/travel-app-admin"}>Login Page</NavLink>
               </div>
               <div className="login-buttons">
                 <button
@@ -129,7 +119,7 @@ function ForgotPass() {
                   className="btn btn-success btn-block btn-lg"
                   disabled={disable}
                 >
-                  {disable ? 'Processing...' : 'Send Email'}
+                  {disable ? "Processing..." : "Send Email"}
                 </button>
               </div>
             </form>

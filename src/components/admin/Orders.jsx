@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { TableHeader, Pagination, Search } from "./Table";
 import { Dropdown, Table } from "react-bootstrap";
 import Loader from "./include/Loader";
@@ -14,7 +14,6 @@ const Orders = () => {
   const [search, setSearch] = useState("");
   const [sorting, setSorting] = useState({ field: "", order: "" });
   const [limit, setlimit] = useState(10);
-  let history = useHistory();
 
   const Header = [
     {
@@ -307,14 +306,7 @@ const Orders = () => {
                               <td>{e.items_count}</td>
                               <td>{e.payment_type}</td>
                               <td>{e.createdAt}</td>
-                              <td
-                                onClick={() =>
-                                  history.push({
-                                    pathname: "/ordersDetails",
-                                    state: e,
-                                  })
-                                }
-                              >
+                              <td>
                                 <i
                                   className="fa fa-eye edit"
                                   style={{ cursor: "pointer" }}

@@ -1,80 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, Link, useHistory } from 'react-router-dom';
-import firebase from './firebase';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import {
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Login() {
-  const history = useHistory();
-  if (localStorage.getItem('DM_Admin_ID') != null) {
-    toast.error('Already login...!');
-    history.push(`/dashboard`);
-  }
-
-  const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState({});
+  // if (localStorage.getItem("DM_Admin_ID") != null) {
+  //   toast.error("Already login...!");
+  // }
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
   const [disable, setDisable] = useState(false);
-
-  const InputEvent = (e) => {
-    const newLoginInfo = { ...loginInfo };
-    newLoginInfo[e.target.name] = e.target.value;
-    setLoginInfo(newLoginInfo);
-  };
+  const [checkVisible, setcheckVisible] = useState({
+    email: false,
+    password: false,
+  });
+  const [first, setfirst] = useState(1);
+  useEffect(() => {
+    console.log(localStorage.getItem("forgotTest") == "false");
+    if (localStorage.getItem("forgotTest") != "false") {
+      toast.success("Password reset mail sent successfully");
+      localStorage.setItem("forgotTest", false);
+      setfirst(first);
+    }
+  }, [first]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    /* if (validate()) {
-        setDisable(true);
-        const { email, password } = loginInfo;
-        const check = firebase.firestore().collection('admin').where('email','==',email).where('password','==',password);
-        check.get().then((querySnapshot) => {
-          if (querySnapshot.docs.length > 0) {
-            querySnapshot.forEach((doc) => {
-              localStorage.setItem('DM_Admin_ID', doc.id);
-              localStorage.setItem('DM_Admin_EMAIL', doc.data().email);
-              localStorage.setItem('DM_Admin_NAME', doc.data().name);
-              localStorage.setItem('DM_Admin_IMAGE', doc.data().image);
-                          toast.success("Login Successfully...!");
-              history.push(`/dashboard`);
-            });
-          } else {
-                      setDisable(false);
-                      toast.error("Your Email Id and Password does not match...!");
-          }
-        }).catch((error) => {
-                  setDisable(false);
-          console.log("Error getting documents: ", error);
-        });
-    }  */
-  };
+    setDisable(true);
+    // validate();
+    console.log({ email, password });
+    if (email.trim().length === 0 || password.trim().length === 0) {
+      if (email.trim().length === 0 && password.trim().length !== 0) {
+        setcheckVisible({ email: true, password: false });
+      } else if (password.trim().length === 0 && email.trim().length !== 0) {
+        setcheckVisible({ email: false, password: true });
+      } else {
+        setcheckVisible({ email: true, password: true });
+      }
+    } else {
+      checkAuth(email);
+      localStorage.setItem("DM_Admin_ID", email);
+      localStorage.setItem("DM_Admin_EMAIL", password);
 
-  const validate = () => {
-    let input = loginInfo;
-
-    let errors = {};
-    let isValid = true;
-
-    if (!input['email']) {
-      isValid = false;
-      errors['email_err'] = 'Please enter email';
+      setcheckVisible({ email: false, password: false });
     }
-    if (!input['password']) {
-      isValid = false;
-      errors['password_err'] = 'Please enter password';
-    }
-
-    setErrors(errors);
-    return isValid;
   };
+  function checkAuth(tempEmail) {
+    signInWithEmailAndPassword(auth, tempEmail.trim(), password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        setemail("");
+        setpassword("");
+        navigate("/dashboard");
+        // ...
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        const errorMessage = error.message;
+        if (
+          errorMessage.search("wrong-password") ||
+          errorMessage.search("user-not-found")
+        ) {
+          toast.error("Incorrect email or password ");
+          setDisable(false);
+        } else {
+          toast.error(`Something Went Wrong`);
+          setDisable(false);
+        }
+      });
+  }
 
   useEffect(() => {
-    document.getElementById('page-loader').style.display = 'none';
+    document.getElementById("page-loader").style.display = "none";
 
-    var element = document.getElementById('page-container');
-    element.classList.add('show');
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
   }, []);
 
   return (
@@ -87,7 +95,7 @@ function Login() {
         <div
           className="login-cover-image"
           style={{
-            backgroundImage: 'url(assets/img/login-bg/login-bg-17.jpg)',
+            backgroundImage: "url(assets/img/login-bg/login-bg-17.jpg)",
           }}
           data-id="login-cover-image"
         ></div>
@@ -117,9 +125,14 @@ function Login() {
                   className="form-control form-control-lg ml-0"
                   placeholder="Email Address"
                   name="email"
-                  onChange={InputEvent}
+                  onChange={(e) => setemail(e.target.value)}
+                  value={email}
                 />
-                <div className="text-danger">{errors.email_err}</div>
+                {checkVisible.email ? (
+                  <div className="text-danger ms-0 text-start">
+                    Please enter email
+                  </div>
+                ) : null}
               </div>
               <div className="form-group m-b-20">
                 <input
@@ -127,12 +140,19 @@ function Login() {
                   className="form-control form-control-lg ml-0"
                   placeholder="Password"
                   name="password"
-                  onChange={InputEvent}
+                  onChange={(e) => setpassword(e.target.value)}
+                  value={password}
                 />
-                <div className="text-danger">{errors.password_err}</div>
+                {checkVisible.password ? (
+                  <div className="text-danger ms-0 text-start">
+                    Please enter password
+                  </div>
+                ) : null}{" "}
               </div>
               <div className="form-group m-b-20">
-                <NavLink to={'/forgot-password'}>Forgot Password?</NavLink>
+                <NavLink to={{ pathname: "/forgot-password", state: email }}>
+                  Forgot Password?
+                </NavLink>
               </div>
 
               <div className="login-buttons">
@@ -140,8 +160,9 @@ function Login() {
                   type="submit"
                   className="btn btn-success btn-block btn-lg"
                   disabled={disable}
+                  onClick={submitHandler}
                 >
-                  {disable ? 'Processing...' : 'Sign me in'}
+                  {disable ? "Processing..." : "Sign me in"}
                 </button>
               </div>
             </form>

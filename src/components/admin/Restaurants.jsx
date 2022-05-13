@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // import { toast } from "react-toastify";
 import { TableHeader, Pagination, Search } from "./Table";
 import { Dropdown, Table } from "react-bootstrap";
@@ -66,7 +66,6 @@ const Restaurants = () => {
     //   sortable: false,
     // },
   ];
-  let history = useHistory();
 
   const [restoList, setRestoList] = useState([]);
   function tConvert(time) {

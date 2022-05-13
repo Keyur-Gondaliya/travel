@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Loader from './include/Loader';
-import Menu from './include/Menu';
-import Footer from './include/Footer';
-import { NavLink, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Loader from "./include/Loader";
+import Menu from "./include/Menu";
+import Footer from "./include/Footer";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 export default function OrdersDetails() {
   const location = useLocation();
@@ -14,67 +14,67 @@ export default function OrdersDetails() {
   const [restoList, setRestoList] = useState([]);
 
   const getOrderDetail = () => {
-    const myurl = 'http://54.177.165.108:3000/api/admin/order-details';
+    const myurl = "http://54.177.165.108:3000/api/admin/order-details";
     var bodyFormData = new URLSearchParams();
-    bodyFormData.append('auth_code', 'Brud#Cust$&$Resto#MD');
-    bodyFormData.append('order_id', data._id);
+    bodyFormData.append("auth_code", "Brud#Cust$&$Resto#MD");
+    bodyFormData.append("order_id", data._id);
 
     axios({
-      method: 'post',
+      method: "post",
       url: myurl,
       data: bodyFormData,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     })
       .then((response) => {
-        console.log('Order ::::::::::::', response['data']['data']);
+        console.log("Order ::::::::::::", response["data"]["data"]);
 
-        setOrderData(response['data']['data']);
+        setOrderData(response["data"]["data"]);
       })
       .catch((error) => {
-        console.log('Errors', error);
+        console.log("Errors", error);
       });
   };
   const getResto = () => {
-    const myurl = 'http://54.177.165.108:3000/api/admin/restaurants-details';
+    const myurl = "http://54.177.165.108:3000/api/admin/restaurants-details";
     var bodyFormData = new URLSearchParams();
-    bodyFormData.append('auth_code', 'Brud#Cust$&$Resto#MD');
-    bodyFormData.append('restaurant_id', data.restaurant_id);
+    bodyFormData.append("auth_code", "Brud#Cust$&$Resto#MD");
+    bodyFormData.append("restaurant_id", data.restaurant_id);
 
     axios({
-      method: 'post',
+      method: "post",
       url: myurl,
       data: bodyFormData,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     })
       .then((response) => {
-        console.log('Rest ::::::::::::', response['data']['data']);
+        console.log("Rest ::::::::::::", response["data"]["data"]);
 
-        setRestoList(response['data']['data']);
+        setRestoList(response["data"]["data"]);
       })
       .catch((error) => {
-        console.log('Errors', error);
+        console.log("Errors", error);
       });
   };
 
   useEffect(() => {
     getOrderDetail();
     getResto();
-    document.getElementById('page-loader').style.display = 'none';
+    document.getElementById("page-loader").style.display = "none";
 
-    var element = document.getElementById('page-container');
-    element.classList.add('show');
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
   }, []);
   function setDateFormat(e) {
     var d = new Date(e);
     return (
-      ('0' + d.getDate()).slice(-2) +
-      '-' +
-      ('0' + (d.getMonth() + 1)).slice(-2) +
-      '-' +
+      ("0" + d.getDate()).slice(-2) +
+      "-" +
+      ("0" + (d.getMonth() + 1)).slice(-2) +
+      "-" +
       d.getFullYear() +
-      ' ' +
+      " " +
       tConvert(
-        ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
+        ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
       )
     );
     function tConvert(time) {
@@ -86,10 +86,10 @@ export default function OrdersDetails() {
       if (time.length > 1) {
         // If time format correct
         time = time.slice(1); // Remove full string match value
-        time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+        time[5] = +time[0] < 12 ? " AM" : " PM"; // Set AM/PM
         time[0] = +time[0] % 12 || 12; // Adjust hours
       }
-      return time.join(''); // return adjusted time or original string
+      return time.join(""); // return adjusted time or original string
     }
   }
   return (
@@ -112,15 +112,14 @@ export default function OrdersDetails() {
             </li>
             <li className="breadcrumb-item currentPath">Orders Details</li>
           </ol>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: "flex" }}>
             <i
               className="fa fa-arrow-left"
-              onClick={useHistory().goBack}
               style={{
-                cursor: 'pointer',
-                fontSize: '20px',
-                marginTop: '7px',
-                marginRight: '10px',
+                cursor: "pointer",
+                fontSize: "20px",
+                marginTop: "7px",
+                marginRight: "10px",
               }}
             ></i>
             <h1 className="page-header">Orders Detail</h1>
@@ -130,10 +129,10 @@ export default function OrdersDetails() {
             <div className="card-body">
               <div
                 className="row RestName p-5"
-                style={{ borderRadius: '20px' }}
+                style={{ borderRadius: "20px" }}
               >
                 <div className="mx-auto ">
-                  <span style={{ fontSize: '18px', fontWeight: '700' }}>
+                  <span style={{ fontSize: "18px", fontWeight: "700" }}>
                     Order Detail
                   </span>
                 </div>
@@ -164,9 +163,9 @@ export default function OrdersDetails() {
               </div>
               <br />
 
-              <div className="row p-5" style={{ borderRadius: '20px' }}>
+              <div className="row p-5" style={{ borderRadius: "20px" }}>
                 <div className="mx-auto ">
-                  <span style={{ fontSize: '18px', fontWeight: '700' }}>
+                  <span style={{ fontSize: "18px", fontWeight: "700" }}>
                     Restaurant Detail
                   </span>
                 </div>
@@ -203,9 +202,9 @@ export default function OrdersDetails() {
               </div>
 
               <br />
-              <div className="row p-5" style={{ borderRadius: '20px' }}>
+              <div className="row p-5" style={{ borderRadius: "20px" }}>
                 <div className="mx-auto ">
-                  <span style={{ fontSize: '18px', fontWeight: '700' }}>
+                  <span style={{ fontSize: "18px", fontWeight: "700" }}>
                     Cart Items
                   </span>
                 </div>
@@ -213,9 +212,9 @@ export default function OrdersDetails() {
 
               <div className="team-boxed">
                 <div className="row people">
-                  {data?.cart_items != '' ? (
+                  {data?.cart_items != "" ? (
                     data?.cart_items?.map((e, i) => {
-                      console.log('orderCartDetail:::::', e);
+                      console.log("orderCartDetail:::::", e);
                       return (
                         <>
                           <div className="col-xl-3 col-md-6 col-lg-4 col-sm-6 col-12 item">
@@ -231,7 +230,7 @@ export default function OrdersDetails() {
                               ) : (
                                 <>
                                   <img
-                                    src={'/assets/img/icon/food-icon.png'}
+                                    src={"/assets/img/icon/food-icon.png"}
                                     alt="CardImage"
                                   />
                                 </>
@@ -244,7 +243,7 @@ export default function OrdersDetails() {
                                   Total Items: {e.item_total}
                                 </p>
                                 <p className="title">modifiers</p>
-                                {e.modifiers != ''
+                                {e.modifiers != ""
                                   ? e?.modifiers?.map((x, j) => {
                                       return (
                                         <>
@@ -257,16 +256,16 @@ export default function OrdersDetails() {
                                             <>
                                               <div className="modifiersList mb-3">
                                                 <p className="modifiersListItem">
-                                                  <b>Modifier Name:</b>{' '}
-                                                  {x?.modifier_name != ''
+                                                  <b>Modifier Name:</b>{" "}
+                                                  {x?.modifier_name != ""
                                                     ? x?.modifier_name
-                                                    : 'N/A'}
+                                                    : "N/A"}
                                                 </p>
                                                 <p className="modifiersListItem">
-                                                  <b>Price:</b>{' '}
-                                                  {x?.price != ''
+                                                  <b>Price:</b>{" "}
+                                                  {x?.price != ""
                                                     ? x?.price
-                                                    : 'N/A'}
+                                                    : "N/A"}
                                                 </p>
                                               </div>
                                             </>
@@ -285,12 +284,12 @@ export default function OrdersDetails() {
                     <>
                       <div className="row mx-auto">
                         <img
-                          src={'/assets/img/icon/cart-icon.png'}
+                          src={"/assets/img/icon/cart-icon.png"}
                           alt="image"
                           style={{
-                            width: '100px',
-                            height: '100px',
-                            margin: '10px',
+                            width: "100px",
+                            height: "100px",
+                            margin: "10px",
                           }}
                         />
                       </div>

@@ -1,12 +1,12 @@
 import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
 function Menu() {
-  const history = useHistory();
+  const navigate = useNavigate();
+
   if (localStorage.getItem("DM_Admin_ID") == null) {
     toast.error("Please login first...!");
-    history.push(`/brud-admin`);
+    navigate("/travel-app-admin");
   }
 
   const Logout = () => {
@@ -14,7 +14,6 @@ function Menu() {
     localStorage.removeItem("DM_Admin_EMAIL");
     localStorage.removeItem("DM_Admin_NAME");
     toast.success("Logout Successfully...!");
-    history.push(`/dance-match-admin`);
   };
 
   var dashboardClass = window.location.pathname.match(/^\/dashboard/)
@@ -102,8 +101,13 @@ function Menu() {
               style={{ borderRadius: "20px", padding: "5px " }}
             >
               <span className="dropdown-item">
-                <NavLink to="/admin-profile" style={{ textDecoration: "none",color:"#231549" }}>
-                  <span className="DropdownItem"  style={{color:"#231549"}}>Edit Profile</span>
+                <NavLink
+                  to="/admin-profile"
+                  style={{ textDecoration: "none", color: "#231549" }}
+                >
+                  <span className="DropdownItem" style={{ color: "#231549" }}>
+                    Edit Profile
+                  </span>
                 </NavLink>
               </span>
               <a onClick={Logout} className="dropdown-item DropdownItem">
@@ -164,8 +168,6 @@ function Menu() {
                 </div>
               </NavLink>
             </li>
-
-             
           </ul>
         </div>
       </div>
@@ -176,4 +178,3 @@ function Menu() {
 }
 
 export default Menu;
-
