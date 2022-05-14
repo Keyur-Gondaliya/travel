@@ -11,7 +11,6 @@ export default function CountryManagement() {
   const [countryList, setCountryList] = useState([]);
   const [country, setCountry] = useState();
   const [month, setMonth] = useState([]);
-  console.log(month);
   const months = [
     "January",
     "February",

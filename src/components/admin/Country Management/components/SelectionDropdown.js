@@ -11,7 +11,7 @@ export default function SelectionDropdown(props) {
 
   return (
     <>
-      <div class="form-group">
+      <div className="form-group">
         <label for="exampleInputPassword1">{props.label}</label>
 
         <div>
@@ -33,7 +33,11 @@ const Dropdown = ({ options, value, onChange, firstOption }) => {
         value={value}
         onChange={onChange}
         id="exampleInputPassword1"
-        class="form-control ml-0"
+        className="form-control ml-0"
+        style={{
+          cursor: "pointer",
+          borderRadius: "17px",
+        }}
       >
         <option value={undefined}>{firstOption}</option>
 
