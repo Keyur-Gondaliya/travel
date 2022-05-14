@@ -6,10 +6,10 @@ a {
   cursor: pointer;
 }
 #header {
-  background-color: #231549/* #FBE9FF*/ 
+  background-color: #231549; /* #FBE9FF*/
 }
 .DropdownItem {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-size: 15px;
   margin: 3px;
 }
@@ -19,28 +19,28 @@ a {
 }
 .BrudAdmin {
   margin-top: 3px;
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-weight: 550;
   font-size: 20px;
 }
 .BrudAdmin b {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-weight: 800;
 }
 .userName {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-size: 15px;
   font-weight: 600;
 }
 .sidebar {
-  background: #231549/* #FBE9FF*/ 
+  background: #231549; /* #FBE9FF*/
 }
 .menuIcon {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   margin-right: 5px;
 }
 .menuItem {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-size: 16px;
   padding: 5px;
   margin-left: 5px;
@@ -53,26 +53,26 @@ a {
   padding-left: 10px;
 }
 .menuItemDiv:hover {
-  background-color: #FBE9FF/* #231549*/ ;
+  background-color: #fbe9ff /* #231549*/;
   color: rgb(253, 154, 154);
   border-radius: 3px;
 }
-.menuItemDiv:hover span,.menuItemDiv:hover i {
+.menuItemDiv:hover span,
+.menuItemDiv:hover i {
   color: #231549;
 }
 .active div {
-  box-shadow: 0px 1px 0px #FBE9FF/* #231549*/ ;
+  box-shadow: 0px 1px 0px #fbe9ff /* #231549*/;
 }
 .active i {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
 }
 .active span {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-weight: 800;
-  
 }
 .basePath {
-  color: #231549/* #231549*/ ;
+  color: #231549 /* #231549*/;
   font-weight: 500;
   font-size: 17px;
 }
@@ -81,7 +81,7 @@ a {
   font-size: 17px;
 }
 .page-header {
-  color: #231549/* #FBE9FF*/ ;
+  color: #231549 /* #FBE9FF*/;
   font-weight: 700;
   font-size: 22px;
 }
@@ -113,15 +113,15 @@ a {
 }
 .profileForm input[type='file']::file-selector-button {
   border-radius: 20px;
-  border: 2px solid #231549/* #FBE9FF*/ ;
+  border: 2px solid #231549 /* #FBE9FF*/;
   background-color: #fff4ee;
   transition: 1s;
   margin-top: -3px;
 }
 
 .profileForm input[type='file']::file-selector-button:hover {
-  background-color: #231549/* #FBE9FF*/ ;
-  border: 2px solid #231549/* #FBE9FF*/ ; 
+  background-color: #231549 /* #FBE9FF*/;
+  border: 2px solid #231549 /* #FBE9FF*/;
   cursor: pointer;
 }
 
@@ -152,7 +152,7 @@ input {
 /* ====================RESTAURANT-DETAIL==================== */
 
 .restaurant_heading {
-  color: #FBE9FF/* #231549*/ ;
+  color: #fbe9ff /* #231549*/;
   font-weight: 600;
   font-size: 16px;
 }
@@ -184,7 +184,7 @@ input {
   box-shadow: 0px 6px 10px #b7b7b7;
 }
 .table th {
-  color: #231549/* #231549*/ ;
+  color: #231549 /* #231549*/;
   font-weight: 600;
 }
 
@@ -225,15 +225,15 @@ input {
 .team-boxed .item .box {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(#ffc3a0, #FBE9FF);
+  background: linear-gradient(#ffc3a0, #fbe9ff);
   box-shadow: 5px 5px 5px #757575;
-  background-color: #231549/* #FBE9FF*/ ;
+  background-color: #231549 /* #FBE9FF*/;
   margin-bottom: 30px;
   border-radius: 20px;
 }
 .team-boxed .item .box:hover {
   transition: 2s !important;
-  background: linear-gradient(#ffa876, #FBE9FF);
+  background: linear-gradient(#ffa876, #fbe9ff);
 }
 
 .team-boxed .item .boxDetail {
@@ -277,4 +277,36 @@ input {
 /* Optional: show position indicator in red */
 .restoScroll::-webkit-scrollbar-thumb {
   background: #ff0000;
+}
+
+/* ================= Country Form ===================== */
+
+.CountryForm {
+  width: 600px;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+@media (max-width: 950px) {
+  .CountryForm {
+    width: auto;
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+}
+.CountryForm label {
+  font-size: 16px;
+  font-weight: 600;
+}
+.CountryForm .imgInput {
+  margin-left: -9px;
+}
+.CountryForm input {
+  border-radius: 20px;
+  padding-left: 15px;
+}
+.CountryForm .textArea {
+  border-radius: 20px;
+}
+.CountryForm .checkBox {
+  font-weight: 300;
 }
