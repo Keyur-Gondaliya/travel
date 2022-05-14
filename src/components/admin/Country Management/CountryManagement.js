@@ -1,22 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../include/Loader";
 import Menu from "../include/Menu";
 import Data from "../json/countryByContinent.json";
-import Continent from "./components/Continent";
+
+import SelectionDropdown from "./components/SelectionDropdown";
 export default function CountryManagement() {
   var continentList = [];
+  const [countinentList, setCountinentList] = useState([]);
+  const [continent, setContinent] = useState();
+  const [countryList, setCountryList] = useState([]);
+  const [country, setCountry] = useState();
+  const [month, setMonth] = useState([]);
+  console.log(month);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
 
+    "November",
+
+    "December",
+  ];
   useEffect(() => {
-    Data.map((e, i) => {
-      continentList.push(e.continent);
-    });
-    continentList = new Set(continentList);
-    console.log(continentList);
     document.getElementById("page-loader").style.display = "none";
 
     var element = document.getElementById("page-container");
     element.classList.add("show");
   }, []);
+  var temp = [];
+  useEffect(() => {
+    Data.map((e, i) => {
+      continentList.push(e.continent);
+    });
+
+    setCountinentList([...new Set(continentList)]);
+
+    var element = document.getElementById("page-container");
+    element.classList.add("show");
+  }, []);
+  const handleContinent = (e) => {
+    setContinent(e);
+    Data.filter((e1, i) => e1.continent == e).map((e, i) => {
+      temp.push(e.country);
+    });
+    setCountryList(temp);
+  };
+
   return (
     <>
       <Loader />
@@ -51,18 +87,24 @@ export default function CountryManagement() {
           <div class="collapse" id="collapseExample">
             <div class="card card-body">
               <form>
-                <Continent list={continentList} />
-                <div class="form-group">
-                  <label for="exampleInputEmail1"> Country Name:</label>
-                  <input
-                    type="email"
-                    class="form-control ml-0"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter Country Name"
-                  />
-                </div>
-
+                <SelectionDropdown
+                  list={countinentList}
+                  setState={handleContinent}
+                  label="Continent Name:"
+                  firstOption="Select Continent"
+                />
+                {countryList && continent ? (
+                  <>
+                    <SelectionDropdown
+                      list={countryList}
+                      setState={(e) => {
+                        setCountry(e);
+                      }}
+                      label="Country Name:"
+                      firstOption="Select Country"
+                    />
+                  </>
+                ) : null}
                 <div class="form-group">
                   <label for="exampleInputPassword1"> Category: </label>
                   <br />
@@ -171,17 +213,15 @@ export default function CountryManagement() {
                     rows="3"
                   ></textarea>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">
-                    Best Months to Visit:
-                  </label>
-                  <input
-                    type="password"
-                    class="form-control ml-0"
-                    id="exampleInputPassword1"
-                    placeholder="Enter Month"
-                  />
-                </div>
+                <SelectionDropdown
+                  list={months}
+                  setState={(e) => {
+                    if (e) setMonth([...month, e]);
+                  }}
+                  label=" Best Months to Visit:"
+                  firstOption="Select Month"
+                />
+
                 <button type="submit" class="btn btn-primary">
                   Submit
                 </button>
