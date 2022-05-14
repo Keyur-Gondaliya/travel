@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import Loader from "../include/Loader";
-import Menu from "../include/Menu";
+import React, { useEffect } from 'react';
+import Loader from '../include/Loader';
+import Menu from '../include/Menu';
 export default function LocationManagement() {
   useEffect(() => {
-    document.getElementById("page-loader").style.display = "none";
+    document.getElementById('page-loader').style.display = 'none';
 
-    var element = document.getElementById("page-container");
-    element.classList.add("show");
+    var element = document.getElementById('page-container');
+    element.classList.add('show');
   }, []);
   return (
     <>
@@ -23,9 +23,11 @@ export default function LocationManagement() {
             <li className="breadcrumb-item basePath ">
               <a href="javascript:;">Home</a>
             </li>
-            <li className="breadcrumb-item active currentPath">Dashboard</li>
+            <li className="breadcrumb-item active currentPath">
+              Location Management
+            </li>
           </ol>
-          <h1 className="page-header">Loaction Management</h1>
+          <h1 className="page-header">Location Management</h1>
         </div>
       </div>
     </>

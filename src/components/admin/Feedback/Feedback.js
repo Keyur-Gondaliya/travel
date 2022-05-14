@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import Loader from "../include/Loader";
-import Menu from "../include/Menu";
+import React, { useEffect } from 'react';
+import Loader from '../include/Loader';
+import Menu from '../include/Menu';
 export default function Feedback() {
   useEffect(() => {
-    document.getElementById("page-loader").style.display = "none";
+    document.getElementById('page-loader').style.display = 'none';
 
-    var element = document.getElementById("page-container");
-    element.classList.add("show");
+    var element = document.getElementById('page-container');
+    element.classList.add('show');
   }, []);
   return (
     <>
@@ -23,7 +23,7 @@ export default function Feedback() {
             <li className="breadcrumb-item basePath ">
               <a href="javascript:;">Home</a>
             </li>
-            <li className="breadcrumb-item active currentPath">Dashboard</li>
+            <li className="breadcrumb-item active currentPath">Feedback</li>
           </ol>
           <h1 className="page-header">Feedback </h1>
         </div>

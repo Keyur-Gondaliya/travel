@@ -9,6 +9,13 @@ export default function CountryManagement() {
   const [error, setError] = useState({});
   const [addPicture, setAddPicture] = useState(false);
   const [image, setImage] = useState('');
+  const [showImg, setShowImg] = useState({
+    src: '',
+    alt: '',
+  });
+  let [state, setState] = useState(0);
+  const [placeList, setPlaceList] = useState({ place: [] });
+
   useEffect(() => {
     Data.map((e, i) => {
       continentList.push(e.continent);
@@ -26,7 +33,8 @@ export default function CountryManagement() {
     continent: '',
     description: '',
     placeToVisit: '',
-    budget: '',
+    budgetFrom: '',
+    budgetTo: '',
     safetyGuidelines: '',
     bestMonths: '',
   });
@@ -38,11 +46,39 @@ export default function CountryManagement() {
 
   const uploadPicture = async (e) => {
     e.preventDefault();
+    if (e.target.files[0]) {
+      setShowImg({
+        src: URL.createObjectURL(e.target.files[0]),
+        alt: e.target.files[0].name,
+      });
+    }
     setAddPicture(true);
     setImage(e.target.files[0]);
   };
 
-  //console.log(formData);
+  const addNewPlace = (e) => {
+    if (formData.placeToVisit != '') {
+      e.preventDefault();
+      let input = state;
+      console.log(input);
+      placeList.place.push(input);
+      setState({ input: null });
+      formData.placeToVisit = '';
+    } else {
+    }
+  };
+  function deleteItem(e, id) {
+    e.preventDefault();
+    var array = [...placeList.place];
+    var index = id;
+
+    if (index !== -1) {
+      array.splice(index, 1);
+      setPlaceList({ place: array });
+    }
+    console.log('Delete Place', placeList);
+  }
+  console.log('place List', placeList);
 
   const validate = () => {
     let isValid = true;
@@ -64,11 +100,15 @@ export default function CountryManagement() {
       isValid = false;
       error['description'] = 'Please enter description';
     }
-    if (!input['placeToVisit']) {
+    if (placeList.place == '') {
       isValid = false;
       error['placeToVisit'] = 'Please enter name of place ';
     }
-    if (!input['budget']) {
+    if (!input['budgetFrom']) {
+      isValid = false;
+      error['budget'] = 'Please enter budget';
+    }
+    if (!input['budgetTo']) {
       isValid = false;
       error['budget'] = 'Please enter budget';
     }
@@ -98,6 +138,7 @@ export default function CountryManagement() {
     e.preventDefault();
     validate();
   };
+  console.log(state.input);
 
   return (
     <>
@@ -266,8 +307,18 @@ export default function CountryManagement() {
                     id="exampleFormControlFile1"
                     onChange={uploadPicture}
                   />
-                  <div className="text-danger">{error.img_err}</div>
+                  {showImg.src != '' ? (
+                    <img
+                      src={showImg.src}
+                      className="form-img__img-preview"
+                      style={{ width: '84px', height: '84px' }}
+                      alt="imgs"
+                    />
+                  ) : (
+                    ''
+                  )}
                 </div>
+                <div className="text-danger">{error.img_err}</div>
                 <div className="form-group mb-4">
                   <label for="exampleFormControlTextarea1">Description:</label>
                   <textarea
@@ -282,37 +333,100 @@ export default function CountryManagement() {
                   ></textarea>
                   <div className="text-danger">{error.description}</div>
                 </div>
+
                 <div className="form-group mb-4">
-                  <label for="exampleFormControlTextarea1">
-                    Places to Visit:
-                  </label>
-                  <textarea
-                    className="form-control textArea"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
-                    name="placeToVisit"
-                    value={formData.placeToVisit}
-                    onChange={(e) =>
-                      setFormData({ ...formData, placeToVisit: e.target.value })
-                    }
-                  ></textarea>
+                  <label for="exampleInputPassword1">Places to Visit:</label>
+                  <div className="d-flex align-item-center">
+                    <input
+                      type="text"
+                      className="form-control ml-0"
+                      id="exampleInputPassword1"
+                      placeholder="Enter places"
+                      name="placeToVisit"
+                      value={formData.placeToVisit}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          placeToVisit: e.target.value,
+                        });
+                        setState({ input: e.target.value });
+                      }}
+                    />
+                    <button
+                      className="btn btn-sm btn-primary"
+                      style={{
+                        borderRadius: '20px',
+                        height: '30px',
+                        marginTop: '14px',
+                      }}
+                      onClick={addNewPlace}
+                    >
+                      Add
+                    </button>
+                  </div>
                   <div className="text-danger">{error.placeToVisit}</div>
+                  <div className="placeListDiv row">
+                    {placeList.place != '' ? (
+                      <div>
+                        {placeList.place.map((subItems, i) => {
+                          return (
+                            <button className="btn btn-primary m-4 placeButton">
+                              {placeList?.place[i]?.input}{' '}
+                              <span className="placeDeleteIcon">
+                                <i
+                                  className="fa fa-trash placeDeleteIcon"
+                                  onClick={(e) => {
+                                    deleteItem(e, i);
+                                  }}
+                                ></i>
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
                 <div className="form-group mb-4">
                   <label for="exampleInputPassword1">
                     Budget Range Per Person:
                   </label>
-                  <input
-                    type="text"
-                    className="form-control ml-0"
-                    id="exampleInputPassword1"
-                    placeholder="Enter Amount"
-                    name="budget"
-                    value={formData.budget}
-                    onChange={(e) =>
-                      setFormData({ ...formData, budget: e.target.value })
-                    }
-                  />
+                  <div className="d-flex w-100">
+                    <label
+                      for="exampleInputPassword1"
+                      style={{ marginTop: '16px', marginRight: '5px' }}
+                    >
+                      From:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control ml-0"
+                      id="exampleInputPassword1"
+                      placeholder="₹"
+                      name="budgetFrom"
+                      value={formData.budgetFrom}
+                      onChange={(e) =>
+                        setFormData({ ...formData, budgetFrom: e.target.value })
+                      }
+                    />
+                    <label
+                      for="exampleInputPassword1"
+                      style={{ marginTop: '16px', marginRight: '5px' }}
+                    >
+                      To:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control ml-0"
+                      id="exampleInputPassword1"
+                      placeholder="₹"
+                      name="budgetTo"
+                      value={formData.budgetTo}
+                      onChange={(e) =>
+                        setFormData({ ...formData, budgetTo: e.target.value })
+                      }
+                    />
+                  </div>
                   <div className="text-danger">{error.budget}</div>
                 </div>
                 <div className="form-group mb-4">
