@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Loader from '../include/Loader';
 import Menu from '../include/Menu';
+import Data from '../json/countryByContinent.json';
+import Continent from './components/Continent';
 export default function CountryManagement() {
+  var continentList = [];
   const [disable, setDisable] = useState(false);
   const [error, setError] = useState({});
   const [addPicture, setAddPicture] = useState(false);
   const [image, setImage] = useState('');
-
   useEffect(() => {
+    Data.map((e, i) => {
+      continentList.push(e.continent);
+    });
+    continentList = new Set(continentList);
+    console.log(continentList);
     document.getElementById('page-loader').style.display = 'none';
 
     var element = document.getElementById('page-container');
@@ -164,7 +171,7 @@ export default function CountryManagement() {
                   <div className="text-danger">{error.continent}</div>
                 </div>
 
-                <div className="form-group mb-4">
+                <div class="form-group">
                   <label for="exampleInputPassword1"> Category: </label>
                   <br />
 
